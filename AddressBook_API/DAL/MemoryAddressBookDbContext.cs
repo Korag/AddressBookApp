@@ -44,15 +44,20 @@ namespace AddressBook_API.DAL
         {
             AddressModel addressToEdit = GetAddressById(modifiedAddress.Id);
 
-            addressToEdit.FirstName = modifiedAddress.FirstName;
-            addressToEdit.LastName = modifiedAddress.LastName;
-            addressToEdit.City = modifiedAddress.City;
-            addressToEdit.Street = modifiedAddress.Street;
-            addressToEdit.PostCode = modifiedAddress.PostCode;
-            addressToEdit.ApartmentNumber = modifiedAddress.ApartmentNumber;
-            addressToEdit.PhoneNumber = modifiedAddress.PhoneNumber;
+            if (addressToEdit != null)
+            {
+                addressToEdit.FirstName = modifiedAddress.FirstName;
+                addressToEdit.LastName = modifiedAddress.LastName;
+                addressToEdit.City = modifiedAddress.City;
+                addressToEdit.Street = modifiedAddress.Street;
+                addressToEdit.PostCode = modifiedAddress.PostCode;
+                addressToEdit.ApartmentNumber = modifiedAddress.ApartmentNumber;
+                addressToEdit.PhoneNumber = modifiedAddress.PhoneNumber;
 
-            return modifiedAddress;
+                return modifiedAddress;
+            }
+
+            return addressToEdit;
         }
 
         public AddressModel DeleteAddress(string id)

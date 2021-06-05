@@ -120,8 +120,16 @@ namespace AddressBook_API.Controllers
 
                 AddressModel editedAddress = _context.EditAddress(newAddress);
 
-                LogInformationRequestResponse(Ok());
-                return Ok(editedAddress);
+                if (editedAddress != null)
+                {
+                    LogInformationRequestResponse(Ok());
+                    return Ok(editedAddress);
+                }
+                else
+                {
+                    LogWarningRequestResponse(NotFound(), "Address not found in database");
+                    return NotFound();
+                }
             }
             else
             {
@@ -161,17 +169,17 @@ namespace AddressBook_API.Controllers
             }
         }
 
-        private void LogRequestPath()
+        protected void LogRequestPath()
         {
             _logger.LogInformation("Request path: " + HttpContext.Request.Path);
         }
 
-        private void LogInformationRequestResponse(StatusCodeResult result)
+        protected void LogInformationRequestResponse(StatusCodeResult result)
         {
             _logger.LogInformation("Status code: " + result.StatusCode.ToString());
         }
 
-        private void LogWarningRequestResponse(StatusCodeResult result, string message)
+        protected void LogWarningRequestResponse(StatusCodeResult result, string message)
         {
             _logger.LogWarning("Status code: " + result.StatusCode.ToString() + "\n\t" + message);
         }
